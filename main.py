@@ -20,7 +20,7 @@ class PromptRequest(BaseModel):
 def ask(request: PromptRequest):
     message = client.messages.create(
         model=model,
-        max_tokens=1024,
+        max_tokens=2048,
         messages=[{"role": "user", "content": request.prompt}],
     )
     return {"response": message.content[0].text}
