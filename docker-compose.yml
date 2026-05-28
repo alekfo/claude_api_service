@@ -5,3 +5,13 @@ services:
       - "8000:8000"
     env_file:
       - .env
+    volumes:
+      - ./data:/app/data
+
+  tg-bot:
+    build: .
+    command: python bot.py
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
