@@ -5,6 +5,7 @@ import time
 import urllib.request
 
 import anthropic
+import httpx
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Security
 from fastapi.security.api_key import APIKeyHeader
@@ -18,7 +19,10 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
-client = anthropic.Anthropic(api_key=os.getenv("CLAUDE_API_KEY"))
+client = anthropic.Anthropic(
+    api_key=os.getenv("CLAUDE_API_KEY"),
+    timeout=httpx.Timeout(85.0),
+)
 model = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6")
 
 api_key_header = APIKeyHeader(name="X-API-Key")

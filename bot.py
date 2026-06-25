@@ -4,7 +4,7 @@ import os
 
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import BotCommand, Message
 from dotenv import load_dotenv
 
 import db
@@ -96,6 +96,12 @@ async def main():
         raise RuntimeError("TELEGRAM_BOT_TOKEN not set")
     db.init_db()
     bot = Bot(token=token)
+    await bot.set_my_commands([
+        BotCommand(command="today", description="Запросы и расход за сегодня"),
+        BotCommand(command="month", description="Сводка за текущий месяц"),
+        BotCommand(command="stats", description="Последние 10 запросов"),
+        BotCommand(command="budget", description="Расход токенов vs бюджет"),
+    ])
     logger.info("Bot started, polling…")
     await dp.start_polling(bot)
 
